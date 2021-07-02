@@ -1,0 +1,24 @@
+{
+  "name": "todo-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aaryarajoju/ToDo-Manager.git"
+  },
+  "author": "AARYA RAJOJU",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/aaryarajoju/ToDo-Manager/issues"
+  },
+  "homepage": "https://github.com/aaryarajoju/ToDo-Manager#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.6.0",
+    "body-parser": "^1.19.0"
+  }
+}

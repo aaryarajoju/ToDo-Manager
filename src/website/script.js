@@ -27,53 +27,29 @@ document.addEventListener("DOMContentLoaded", (event) => {
         console.log(resObj);
 
         let listOfTasks = document.createElement("ul");
+        listOfTasks.setAttribute('id', 'tasksList');
         for (const key in resObj){
             console.log(key, resObj[key])
-            let tasks = document.createElement("li");
-            let taskDiv = document.createElement('div');
-            let statusMenu = document.createElement('select');
-            let doneOption = document.createElement('option');
-            let doingOption = document.createElement('option')
-            let todoOption = document.createElement('option');
-            let deleteButton = document.createElement('button');
-            let editButton = document.createElement('button')
-
-            let taskName = document.createTextNode(resObj[key].taskname);
-
-            todoOption.setAttribute('value', 'todo');
-            todoOption.appendChild(document.createTextNode('ToDo'));
-            doingOption.setAttribute('value', 'doing');
-            doingOption.appendChild(document.createTextNode('Doing'));
-            doneOption.setAttribute('value', 'done');
-            doneOption.appendChild(document.createTextNode('Done'));
-            statusMenu.appendChild(todoOption);
-            statusMenu.appendChild(doingOption);
-            statusMenu.appendChild(doneOption);
-
-            deleteButton.setAttribute('type', 'button');
-            deleteButton.appendChild(document.createTextNode('-'));
-
-            editButton.setAttribute('type', 'button');
-            editButton.appendChild(document.createTextNode('*'));
-
-            taskDiv.appendChild(taskName);
-            taskDiv.appendChild(statusMenu);
-            taskDiv.appendChild(deleteButton);
-            taskDiv.appendChild(editButton);
-            tasks.appendChild(taskDiv);
-            listOfTasks.appendChild(tasks);
+            addTaskToList(resObj, key, listOfTasks);
         }
         listCont.appendChild(listOfTasks);
     };
 
     let newTaskForm = document.createElement('form');
     let inputField = document.createElement('input');
+
+    inputField.setAttribute('id', 'newTaskInput');
     inputField.setAttribute('type', 'text');
-    inputField.setAttribute('value', 'New Task');
+    inputField.setAttribute('placeholder', 'New Task');
 
     let submitButton = document.createElement('input');
     submitButton.setAttribute('type', 'submit');
     submitButton.setAttribute('value', 'ADD TASK');
+    submitButton.addEventListener('click', function(){
+        let text = document.getElementById('newTaskInput').value;
+        console.log(text);
+        addTask(text);
+    });
 
     newTaskForm.appendChild(inputField)
     newTaskForm.appendChild(submitButton)
@@ -82,3 +58,78 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 });
 
+
+function deleteTask(taskId){
+
+    request.open("DELETE", `${url}/${taskId}`);
+    request.send();
+    request.onload = (e) => {
+        let resp = request.response;
+        let stat = request.status;
+        if (stat === 200) {
+            document.getElementById(`task${taskId}`).remove();
+        } else {
+            alert('error ' + resp);
+        }
+    };
+}
+
+function addTask(text){
+
+    request.open("POST", `${url}`);
+    request.setRequestHeader('Content-type', 'application/json');
+    request.send(JSON.stringify({
+        'taskname': text,
+        'status': 'todo'
+    }));
+    request.onload = (e) => {
+        let resp = request.response;
+        let stat = request.status;
+        console.log(stat);
+        if (stat === 201) {
+            // supposed to add task to list, but the automatic page reload takes care of that
+        } else {
+            alert('error ' + resp)
+        }
+    };
+}
+
+function addTaskToList(resObj, key, listOfTasks){
+    let tasks = document.createElement("li");
+    let taskDiv = document.createElement('div');
+    let statusMenu = document.createElement('select');
+    let doneOption = document.createElement('option');
+    let doingOption = document.createElement('option')
+    let todoOption = document.createElement('option');
+    let deleteButton = document.createElement('button');
+    let editButton = document.createElement('button')
+
+    let taskName = document.createTextNode(resObj[key].taskname);
+
+    todoOption.setAttribute('value', 'todo');
+    todoOption.appendChild(document.createTextNode('ToDo'));
+    doingOption.setAttribute('value', 'doing');
+    doingOption.appendChild(document.createTextNode('Doing'));
+    doneOption.setAttribute('value', 'done');
+    doneOption.appendChild(document.createTextNode('Done'));
+    statusMenu.appendChild(todoOption);
+    statusMenu.appendChild(doingOption);
+    statusMenu.appendChild(doneOption);
+
+    editButton.setAttribute('type', 'button');
+    editButton.setAttribute('class', 'editBut');
+    editButton.appendChild(document.createTextNode('*'));
+
+    deleteButton.setAttribute('type', 'button');
+    deleteButton.setAttribute('class', 'deleteBut');
+    deleteButton.addEventListener('click', function(e){deleteTask(resObj[key].id)});
+    deleteButton.appendChild(document.createTextNode('-'));
+
+    tasks.setAttribute('id', `task${resObj[key].id}`)
+    taskDiv.appendChild(taskName);
+    taskDiv.appendChild(statusMenu);
+    taskDiv.appendChild(editButton);
+    taskDiv.appendChild(deleteButton);
+    tasks.appendChild(taskDiv);
+    listOfTasks.appendChild(tasks);
+}

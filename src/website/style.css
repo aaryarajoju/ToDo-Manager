@@ -1,0 +1,128 @@
+body {
+    background-image: url("./images/bg.jpg");
+}
+
+select {
+    /* for Firefox */
+    -moz-appearance: none;
+    /* for Chrome */
+    -webkit-appearance: none;
+    border: 0;
+    background: transparent;
+    border-bottom: 1px solid gray;
+    font-size: 20px;
+    font-family: 'Handlee', cursive;
+}
+
+.title {
+    font-family: "Calibri", serif;
+}
+
+.titleCont {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-size: 30px;
+}
+
+.listContainer {
+    margin-bottom: 50px;
+    margin-top: 50px;
+    /*background: fuchsia;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#tasksList {
+    text-align: center;
+    width: 40vw;
+    /*background: aqua;*/
+    display: inline-block;
+
+}
+
+.createForm {
+    text-align: center;
+}
+
+.bodyDiv {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.bulletDiv {
+    display: inline-block;
+    margin-left: 25px;
+    margin-right: 25px;
+    font-size: 15px;
+    color: gray;
+    opacity: 0.2;
+}
+
+.textDiv {
+    display: inline-block;
+    width: 300px;
+    text-align: left;
+}
+
+.statusDiv {
+    display: inline-block;
+    width: 100px;
+    text-align: left;
+}
+
+.deleteDiv {
+    display: inline-block;
+}
+
+.listedTask {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid gray;
+
+}
+
+.bottomBorder {
+    margin-top: 10px;
+    width: 500px;
+    position: center;
+
+}
+
+.newTask {
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid gray;
+    font-size: 25px;
+    font-family: Handlee, cursive;
+    width: 300px;
+}
+
+.addButton {
+    background: transparent;
+    border: 1px solid gray;
+    font-size: 15px;
+    color: gray;
+}
+
+.deleteButton {
+    background: transparent;
+    border: 0;
+    font-size: 17px;
+    color: gray;
+}
+
+span {
+    font-size: 25px;
+    font-family: 'Handlee', cursive;
+}
+
+.editForm {
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid gray;
+    font-size: 25px;
+    font-family: Handlee, cursive;
+}

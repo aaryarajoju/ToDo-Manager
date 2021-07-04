@@ -56,9 +56,9 @@ select {
     display: inline-block;
     margin-left: 25px;
     margin-right: 25px;
-    font-size: 15px;
+    font-size: 20px;
     color: gray;
-    opacity: 0.2;
+    opacity: 0.8;
 }
 
 .textDiv {
@@ -81,7 +81,6 @@ select {
     margin-top: 20px;
     margin-bottom: 20px;
     border-bottom: 2px solid gray;
-
 }
 
 .bottomBorder {
@@ -112,6 +111,7 @@ select {
     border: 0;
     font-size: 17px;
     color: gray;
+    opacity: 0.8;
 }
 
 span {

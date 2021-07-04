@@ -160,7 +160,7 @@ function addTaskToList(task, listOfTasks){
     let bulletDiv = document.createElement('div');
     bulletDiv.setAttribute('class', 'bulletDiv');
     let bulletIcon = document.createElement('i');
-    bulletIcon.setAttribute('class', 'fas fa-square');
+    bulletIcon.setAttribute('class', 'fa fa-hand-o-right');
     bulletDiv.appendChild(bulletIcon);
 
     let textDiv = document.createElement('div');

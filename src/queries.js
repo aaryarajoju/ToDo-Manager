@@ -44,7 +44,7 @@ const createTask = (request, response) => {
             if (error) {
                 throw error;
             }
-            response.status(201).send(`Task added with ID: ${results.rows[0].id}`);
+            response.status(201).send(`${results.rows[0].id}`);
         }
     );
 };
@@ -67,7 +67,7 @@ const updateTask = (request, response) => {
 const deleteTask = (request, response) => {
     const id = parseInt(request.params.id)
 
-    pool.query('' +
+    pool.query(
         'DELETE FROM tasks WHERE id = $1', [id],
         (error, results) => {
             if (error) {

@@ -1,3 +1,9 @@
+/*
+*  Copyright (c) 2021 AARYA RAJOJU. Rights reserved.
+*  This Code is licensed under the GNU General Public License v3.0
+*  refer: https://github.com/aaryarajoju/ToDo-Manager/blob/main/LICENSE
+*/
+
 const {user, host, database, password, port} = require("./config.json");
 
 const Pool = require('pg').Pool;

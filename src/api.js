@@ -18,11 +18,11 @@ app.use(
     })
 );
 
-app.get('/api/tasks', db.getTasks);
-app.get('/api/tasks/:id', db.getTaskById);
-app.post('/api/tasks', db.createTask);
-app.put('/api/tasks/:id', db.updateTask);
-app.delete('/api/tasks/:id', db.deleteTask);
+app.get('/api/tasks', (req, res) => db.getTasks(req, res));
+app.get('/api/tasks/:id', (req, res) => db.getTaskById(req, res));
+app.post('/api/tasks', (req, res) => db.createTask(req, res));
+app.put('/api/tasks/:id', (req, res) => db.updateTask(req, res));
+app.delete('/api/tasks/:id', (req, res) => db.deleteTask(req, res));
 
 app.listen(port, () => {
     console.log(`App running on port ${port}.`);

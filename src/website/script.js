@@ -4,10 +4,13 @@
 *  refer: https://github.com/aaryarajoju/ToDo-Manager/blob/main/LICENSE
 */
 
+// importing the `XMLHttpRequest` module for sending http calls to the rest api
 const request = new XMLHttpRequest();
-const url = 'http://localhost:3000/api/tasks';
-let docBody = document.getElementById('bodyDiv');
 
+// defining the url for sending the http requests to
+const url = 'http://localhost:3000/api/tasks';
+
+let docBody = document.getElementById('bodyDiv');
 docBody.setAttribute('class', 'bodyDiv');
 
 let titleCont = document.createElement('div');
@@ -35,6 +38,7 @@ docBody.appendChild(createCont);
 
 document.addEventListener("DOMContentLoaded", (event) => {
 
+    // sending a `GET` request to the api to get all the tasks data
     request.open("GET", url);
     request.send();
 
@@ -52,12 +56,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
                     id: resObj[key].id,
                     status: resObj[key].status
                 }
+                // calling the function to add each task to the list
                 addTaskToList(task, listOfTasks);
             }
         }
         listCont.appendChild(listOfTasks);
     };
 
+    // add a field to create new tasks
     let newTaskForm = document.createElement('form');
     newTaskForm.setAttribute('autocomplete', 'off')
     let inputField = document.createElement('input');
@@ -72,6 +78,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         addTask(text);
     });
 
+    // adding a submit button to the new task field
     let submitButton = document.createElement('input');
     submitButton.setAttribute('type', 'button');
     submitButton.setAttribute('class', 'addButton');
@@ -82,6 +89,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         addTask(text);
     });
 
+    // adding the new task elements to the div
     newTaskForm.appendChild(inputField);
     newTaskForm.appendChild(submitButton);
 
@@ -89,21 +97,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 });
 
-
-function deleteTask(taskId){
-
-    request.open("DELETE", `${url}/${taskId}`);
-    request.send();
-    request.onload = (e) => {
-        let resp = request.response;
-        let stat = request.status;
-        if (stat === 200) {
-            document.getElementById(`task${taskId}`).remove();
-        } else {
-            alert('error ' + resp);
-        }
-    };
-}
 
 function addTaskToList(task, listOfTasks){
 
@@ -116,6 +109,7 @@ function addTaskToList(task, listOfTasks){
     let todoOption = document.createElement('option');
     let deleteButton = document.createElement('button');
 
+    // adding the task name to the field
     let textSpan = document.createElement('span');
     textSpan.setAttribute('class', 'taskName');
     textSpan.setAttribute('id', `span${task.id}`);
@@ -126,6 +120,7 @@ function addTaskToList(task, listOfTasks){
     let taskName = document.createTextNode(task.taskname);
     textSpan.appendChild(taskName);
 
+    // adding status options to the field
     todoOption.setAttribute('value', 'todo');
     todoOption.setAttribute('id', 'todoSelect');
     todoOption.setAttribute('class', 'selectOption');
@@ -155,6 +150,7 @@ function addTaskToList(task, listOfTasks){
         changeStatus(task, newStatus);
     })
 
+    // adding a delete button
     deleteButton.setAttribute('type', 'button');
     deleteButton.setAttribute('class', 'deleteButton');
     deleteButton.addEventListener('click', function(e){deleteTask(task.id)});
@@ -162,7 +158,7 @@ function addTaskToList(task, listOfTasks){
     trashIcon.setAttribute('class', 'far fa-trash-alt');
     deleteButton.appendChild(trashIcon);
 
-
+    // adding a bullet to the field
     let bulletDiv = document.createElement('div');
     bulletDiv.setAttribute('class', 'bulletDiv');
     let bulletIcon = document.createElement('i');
@@ -181,6 +177,7 @@ function addTaskToList(task, listOfTasks){
     deleteDiv.setAttribute('class', 'deleteDiv');
     deleteDiv.appendChild(deleteButton);
 
+    // adding all the elements to a div
     taskDiv.appendChild(bulletDiv);
     taskDiv.appendChild(textDiv);
     taskDiv.appendChild(statusDiv);
@@ -197,8 +194,10 @@ function addTaskToList(task, listOfTasks){
     listOfTasks.appendChild(tasks);
 }
 
+// function to create a new task
 function addTask(text){
 
+    // sends a `POST` http request to the api
     request.open("POST", `${url}`);
     request.setRequestHeader('Content-type', 'application/json');
     request.send(JSON.stringify({
@@ -224,10 +223,12 @@ function addTask(text){
     };
 }
 
+// function to change the status of a task
 function changeStatus(task, newStatus) {
 
     let taskID = task.id
 
+    // sends a `PUT` http request to the api
     request.open("PUT", `${url}/${taskID}`);
     request.setRequestHeader('Content-type', 'application/json');
     request.send(JSON.stringify({
@@ -245,6 +246,7 @@ function changeStatus(task, newStatus) {
     };
 }
 
+// function to change the name of a task
 function changeTaskName(e, task){
 
     let spanElement = document.getElementById(`span${task.id}`);
@@ -258,6 +260,7 @@ function changeTaskName(e, task){
 
         let newTaskName = editNameField.value;
 
+        // sends a `PUT` http request to the api
         request.open("PUT", `${url}/${task.id}`);
         request.setRequestHeader('Content-type', 'application/json');
         request.send(JSON.stringify({
@@ -281,3 +284,21 @@ function changeTaskName(e, task){
     spanElement.appendChild(editNameField);
 
 }
+
+// function to delete a task
+function deleteTask(taskId){
+
+    // sends a `DELETE` http request to the api
+    request.open("DELETE", `${url}/${taskId}`);
+    request.send();
+    request.onload = (e) => {
+        let resp = request.response;
+        let stat = request.status;
+        if (stat === 200) {
+            document.getElementById(`task${taskId}`).remove();
+        } else {
+            alert('error ' + resp);
+        }
+    };
+}
+
